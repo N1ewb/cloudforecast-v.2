@@ -196,7 +196,6 @@ const App = () => {
         </section>
         <button onClick={notify}>Notify!</button>
       </div>
-      
     </div>
     </>
   );

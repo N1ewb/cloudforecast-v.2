@@ -15,10 +15,10 @@ import PressureIcon from './images/icons8-uneven-surface-64.png'
 import WeatherList from './components/WeatherList';
 import LaucherIcon from './images/android-launchericon-512-512.png'
 import CloudBg from './images/cloudy-bg.jpg'
-import Rain from './images/icons8-rain-48.png'
+// import Rain from './images/icons8-rain-48.png'
 
 const API_URL =`https://api.open-meteo.com/v1/forecast?`
-const ACESS_KEY = "pk.81e491f248aa4dbd5ed6d092ba5ccca8"
+// const ACESS_KEY = "pk.81e491f248aa4dbd5ed6d092ba5ccca8"
 
 const App = () => {
   const [longitude, setLongitude] = useState(0)
@@ -31,6 +31,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [weatherType, setWeatherType] = useState(0)
   const [notificationFired, setNotificationFired] = useState(false);
+
 
   const fetchLocation = async (address) => { 
     try {
@@ -60,6 +61,7 @@ const App = () => {
         setWeatherType(response.data.current.weather_code)
         setMain(currentMain);
         setHourly(hourlyMain)
+        
       } catch (error) {
         console.error('Error fetching weather data:', error);
         setError('Unable to fetch weather data.');
@@ -67,11 +69,12 @@ const App = () => {
         setLoading(false);
       }
     };
-
-    const notify = () => toast('Hey yeah?', setNotificationFired(true));
+    
+    const notify = () => toast(`Hey, It'\s a ${vmo[weatherType].day.description}, Bring yo Umbrella Yeah`, setNotificationFired(true));
     if (!notificationFired && weatherType > 60){
       notify()
     }
+
   const handleSearch = () => {
     setSearch(search)
     fetchLocation(search)
@@ -120,7 +123,6 @@ const App = () => {
                 <img className="locaion-icon" src={LocationIcon} alt="location-icon" height="15px" width="15px"/>
                 <p className='temperature'>{main.temperature_2m}°C</p>
                 <p>{vmo[weatherType].day.description}</p>
-                <button onClick={notify}>Notify!</button>
                 <ToastContainer />
               </>
               ) : (
@@ -192,7 +194,9 @@ const App = () => {
                 </>
               )}     
         </section>
+        <button onClick={notify}>Notify!</button>
       </div>
+      
     </div>
     </>
   );
